@@ -27,44 +27,51 @@
  *
  *
  * 思考：
- *
- *
+ * 使用前缀和思想：
+ * 假设 sum[] 是截至到当前的数组的数据之和
+ * 那么 sum[i] = sum[i-1]+param[i]
+ * 反之 i之后的子串之和是 sum[length-1] - sum[i]
  */
 
 public class Code724 {
 
     public static void main(String[] args) {
-//        int[] nums = new int[]{-1,-1,-1,-1,-1,-1,1,0};
+        int[] nums = new int[]{-1,-1,-1,-1,-1,-1,-1,1,0};
 //        int[] nums = new int[]{-1,-1,-1,0,1,1};
-        int[] nums = new int[]{1,1,0,-1,-1,-1};
+//        int[] nums = new int[]{1,1,0,-1,-1,-1};
         System.out.println(pivotIndex(nums));
     }
 
     public static int pivotIndex(int[] nums) {
-        if (nums.length == 0) return -1;
-        if (nums.length==1) return 0;
-
-        int left = 0;
-        int right = 0;
-
-        int leftindex=-1;
-        int rightindex = nums.length;
-
+        int sum = 0;
+        int sums[] = new int[nums.length];
 
         for (int i = 0; i < nums.length; i++) {
-            if (left==right && leftindex+1==rightindex-1) return leftindex+1;
-            if (leftindex+1>=rightindex || rightindex-1<=leftindex) return -1;
+            sum+=nums[i];
+            sums[i] = sum;
+        }
 
-//            int current = Math.abs(left-right);
-            int nexleft = left+nums[leftindex+1];
-            int nexright = right+nums[rightindex-1];
+        for (int i = 0; i < nums.length; i++) {
+            if(sums[i]-nums[i] == sums[nums.length-1]-sums[i]) {
+                return i;
+            }
+        }
 
-            if (Math.abs(nexleft-right)<Math.abs(left-nexright)){
-                left = nexleft;
-                leftindex++;
+        return -1;
+
+    }
+
+    public static int pivotIndex2(int[] nums) {
+        int sum = 0;
+        for (int num : nums) {
+            sum+=num;
+        }
+        int leftsum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if(leftsum == sum-leftsum-nums[i]){
+                return i;
             }else{
-                right=nexright;
-                rightindex--;
+                leftsum += nums[i];
             }
         }
 
