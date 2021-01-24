@@ -39,17 +39,17 @@ public class Code206 {
     }
 
     public static ListNode reverseList(ListNode head) {
-        ListNode pre = new ListNode(0);
-        pre.next = head;
+        ListNode pre = null;
+        ListNode current = head;
 
-        while (head.next != null){
-            ListNode tmp = head.next;
-            head.next = tmp.next;
-            tmp.next = head;
-            pre.next = tmp;
+        while (current != null){
+            ListNode tmp = current;
+            current = current.next;
+            tmp.next = pre;
+            pre = tmp;
         }
 
-        return pre.next;
+        return pre;
     }
 
 }
