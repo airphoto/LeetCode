@@ -1,5 +1,4 @@
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * @ClassName Code692
@@ -31,11 +30,60 @@ import java.util.PriorityQueue;
  **/
 public class Code692 {
     public static void main(String[] args) {
-
+        String[] values = {"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"};
+        for (String s : topKFrequent2(values, 4)) {
+            System.out.println(s);
+        }
+        System.out.println("---------------");
+        String[] values2 = {"i", "love", "leetcode", "i", "love", "coding"};
+        for (String s : topKFrequent2(values2, 2)) {
+            System.out.println(s);
+        }
     }
     public static List<String> topKFrequent(String[] words, int k) {
-        PriorityQueue<String> maxHeap = new PriorityQueue<>();
 
-        return null;
+        Map<String,Integer> data = new HashMap<>();
+        for (String word : words) {
+            data.put(word,data.getOrDefault(word,0)+1);
+        }
+
+        List<Map.Entry<String,Integer>> list = new ArrayList<>(data.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer valueCompare = o2.getValue()-o1.getValue();
+                return valueCompare==0?o1.getKey().compareTo(o2.getKey()):valueCompare;
+            }
+        });
+
+        List<String> result = new ArrayList<>();
+        for (int i=0;i<k;i++){
+            result.add(list.get(i).getKey());
+        }
+        return result;
+    }
+
+    public static List<String> topKFrequent2(String[] words, int k) {
+        PriorityQueue<Map.Entry<String,Integer>> data = new PriorityQueue<>(new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer valueCompare = o2.getValue()-o1.getValue();
+                return valueCompare==0?o1.getKey().compareTo(o2.getKey()):valueCompare;
+            }
+        });
+
+        Map<String,Integer> pair = new HashMap<>();
+        for (String word : words) {
+            pair.put(word,pair.getOrDefault(word,0)+1);
+        }
+
+        data.addAll(pair.entrySet());
+
+        List<String> result = new ArrayList<>();
+        for (int i=0;i<k;i++){
+            result.add(data.poll().getKey());
+        }
+        return result;
     }
 }
