@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,7 +26,23 @@ import java.util.Set;
 
 public class Code387 {
     public static int firstUniqChar(String s) {
+        Map<Character,Integer> firstIndex = new HashMap<>();
+        char[] chars = s.toCharArray();
 
+        for (int i = 0; i < chars.length; i++) {
+            if(!firstIndex.containsKey(chars[i])){
+                firstIndex.put(chars[i],i);
+            }else {
+                chars[firstIndex.get(chars[i])]='0';
+                chars[i]='0';
+            }
+        }
+
+        for (int i = 0; i < chars.length; i++) {
+            if(chars[i]>'0'){
+                return i;
+            }
+        }
 
         return -1;
     }
@@ -32,5 +50,6 @@ public class Code387 {
     public static void main(String[] args) {
         System.out.println(firstUniqChar("leetcode"));
         System.out.println(firstUniqChar("loveleetcode"));
+        System.out.println(firstUniqChar("lllll"));
     }
 }
