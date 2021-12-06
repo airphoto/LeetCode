@@ -42,7 +42,35 @@ public class Code328 {
         return head;
     }
 
-    public static void main(String[] args) {
+    public static ListNode oddEvenList2(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode evenHead = head.next;
+        ListNode odd = head;
+        ListNode even = evenHead;
 
+        while (even!=null){
+            ListNode nxtO = even.next;
+            even.next = nxtO.next;
+            even = even.next;
+            nxtO.next = odd.next;
+            odd.next = nxtO;
+            odd = odd.next;
+        }
+        return head;
+    }
+
+    public static void main(String[] args) {
+        ListNode ln1 = new ListNode(1);
+        ListNode ln2 = new ListNode(2);
+        ListNode ln3 = new ListNode(3);
+        ListNode ln4 = new ListNode(4);
+        ListNode ln5 = new ListNode(5);
+        ln1.next = ln2;
+        ln2.next = ln3;
+        ln3.next = ln4;
+        ln4.next = ln5;
+        System.out.println(oddEvenList(ln1));
     }
 }
