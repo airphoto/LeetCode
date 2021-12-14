@@ -95,4 +95,32 @@ public class TreeNode {
             }
         }
      }
+
+    /**
+     * 后续遍历
+     * @param root
+     */
+    public static void postOrderByIteration2(TreeNode root){
+        if(root==null){
+            return;
+        }
+
+        Stack<TreeNode> src = new Stack<>();
+        Stack<TreeNode> result = new Stack<>();
+        src.push(root);
+        while (!src.isEmpty()){
+            TreeNode p = src.pop();
+            result.push(p);
+            if(p.left != null){
+                src.push(p.left);
+            }
+            if(p.right!=null){
+                src.push(p.right);
+            }
+        }
+
+        while (!result.isEmpty()){
+            System.out.println(result.pop().val);
+        }
+    }
 }
