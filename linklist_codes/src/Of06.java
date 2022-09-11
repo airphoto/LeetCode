@@ -40,6 +40,26 @@ public class Of06 {
         return nodes;
     }
 
+    public static int[] reversePrint2(ListNode head) {
+        if(head==null){
+            return new int[0];
+        }
+        int length=0;
+        ListNode current = head;
+        while (current!=null){
+            current = current.next;
+            length++;
+        }
+        int[] nodes = new int[length];
+        int i=1;
+        while (head!=null){
+            nodes[length-i]=head.val;
+            head = head.next;
+            i++;
+        }
+        return nodes;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -47,6 +67,6 @@ public class Of06 {
         node1.next = node2;
         node2.next = node3;
 
-        System.out.println(Arrays.toString(reversePrint(node1)));
+        System.out.println(Arrays.toString(reversePrint2(node1)));
     }
 }

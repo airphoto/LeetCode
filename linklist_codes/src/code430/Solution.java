@@ -1,9 +1,5 @@
 package code430;
 
-import com.sun.glass.events.mac.NpapiEvent;
-
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Stack;
 
 /**
